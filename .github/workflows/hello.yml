@@ -1,12 +1,12 @@
-# Workflow
-# should have name:
+#Workflow
+#should have name:
 name: Hello
 
 #on tell when wf runs
 on:
   workflow_dispatch:
-# Jobs
-# should be in workflow
+#Jobs
+#should be in workflow
 jobs:
 
   say-hello:
@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: say hello to everyone
         run: echo "Hello Dosto"
-# steps
-# should be in jobs
-# actions
-# should be in workflow
+#steps
+#should be in jobs
+#actions
+#should be in workflow
