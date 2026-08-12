@@ -21,3 +21,10 @@ jobs:
 
          - name: check files for linting
            run: ruff check .
+
+         - name: Set up Python
+           uses: actions/setup-python@v5
+           with:
+            python-version: '3.14' # Specify your exact Python version here
+            cache: 'pip'          # Optional: turn on automatic caching for faster runs
+
