@@ -3,6 +3,8 @@ name: Hello
 
 "on":
   push:
+  schedule:
+    - cron: "0 0 * * *"
 
 jobs:
   greet:
