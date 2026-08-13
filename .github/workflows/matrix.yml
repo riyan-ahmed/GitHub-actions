@@ -9,6 +9,7 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     strategy:
+      fail-fast: false
       matrix:
         os:
           - ubuntu-latest
@@ -26,3 +27,7 @@ jobs:
 
       - name: Print Python version
         run: python --version
+
+      - name: Fail one combination
+        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11'
+        run: exit 1
