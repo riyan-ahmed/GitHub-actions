@@ -1,0 +1,33 @@
+---
+name: GitHub Hosted Runners
+
+"on":
+  workflow_dispatch:
+
+jobs:
+  ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print runner information
+        run: |
+          echo "OS: ${{ runner.os }}"
+          hostname
+          whoami
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - name: Print runner information
+        run: |
+          echo "OS: ${{ runner.os }}"
+          hostname
+          whoami
+
+  macos:
+    runs-on: macos-latest
+    steps:
+      - name: Print runner information
+        run: |
+          echo "OS: ${{ runner.os }}"
+          hostname
+          whoami
