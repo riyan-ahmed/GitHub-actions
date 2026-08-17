@@ -1,0 +1,38 @@
+---
+name: Artifacts Demo
+
+"on":
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/artifacts.yml"
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create a report file
+        run: |
+          mkdir -p reports
+          echo "Build report generated at $(date -u)" > reports/build-report.txt
+          echo "Commit: ${{ github.sha }}" >> reports/build-report.txt
+
+      - name: Upload report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-report
+          path: reports/build-report.txt
+
+  consume-report:
+    needs: generate-report
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download report artifact from previous job
+        uses: actions/download-artifact@v4
+        with:
+          name: build-report
+
+      - name: Print report contents
+        run: cat build-report.txt
