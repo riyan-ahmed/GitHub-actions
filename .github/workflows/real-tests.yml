@@ -20,7 +20,9 @@ jobs:
         run: chmod +x scripts/sample_logs_generator.sh
 
       - name: Run log generator script
-        run: ./scripts/sample_logs_generator.sh logs/sample.log 20
+        run: |
+          mkdir -p logs
+          ./scripts/sample_logs_generator.sh logs/sample.log 20
 
       - name: Show generated log file
         run: cat logs/sample.log
