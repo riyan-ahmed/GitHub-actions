@@ -1,5 +1,7 @@
 # Github Actions Practice
 
+![Docker Publish](https://github.com/riyan-ahmed/GitHub-actions/actions/workflows/docker-publish.yml/badge.svg)
+
 ## Concepts
 
 ## 1.Workflows
