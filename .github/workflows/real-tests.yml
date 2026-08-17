@@ -1,0 +1,26 @@
+---
+name: Real Script Tests
+
+"on":
+  workflow_dispatch:
+  push:
+    paths:
+      - "scripts/**"
+      - ".github/workflows/real-tests.yml"
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Make script executable
+        run: chmod +x scripts/sample_logs_generator.sh
+
+      - name: Run log generator script
+        run: ./scripts/sample_logs_generator.sh logs/sample.log 20
+
+      - name: Show generated log file
+        run: cat logs/sample.log
