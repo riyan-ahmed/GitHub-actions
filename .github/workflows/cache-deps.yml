@@ -5,7 +5,7 @@ name: Dependency Cache Demo
   workflow_dispatch:
   push:
     paths:
-      - "requirements.txt"
+      - "Dockerfile"
       - ".github/workflows/cache-deps.yml"
 
 jobs:
@@ -25,12 +25,12 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          key: ${{ runner.os }}-pip-flask
           restore-keys: |
             ${{ runner.os }}-pip-
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install flask
 
       - name: Show installed packages
         run: pip list
