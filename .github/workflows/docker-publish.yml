@@ -2,10 +2,7 @@
 name: Docker Publish
 
 "on":
-  push:
-    branches:
-      - "**"
-
+  workflow_dispatch:
 env:
   IMAGE_REPO: >-
     ${{ secrets.DOCKER_USERNAME }}/github-actions-practice
