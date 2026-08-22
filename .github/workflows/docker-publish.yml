@@ -23,6 +23,22 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+      - name: Verify Docker Hub secrets
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+        run: |
+          if [ -z "$DOCKER_USERNAME" ]; then
+            echo "DOCKER_USERNAME is missing"
+            exit 1
+          fi
+
+          if [ -z "$DOCKER_TOKEN" ]; then
+            echo "DOCKER_TOKEN is missing"
+            exit 1
+          fi
+
+          echo "Both Docker Hub secrets are available"
 
       - name: Log in to Docker Hub
         if: github.ref == 'refs/heads/main'
