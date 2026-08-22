@@ -1,0 +1,21 @@
+---
+name: Ignore Docs Changes
+
+"on":
+  push:
+    branches:
+      - main
+      - "release/*"
+    paths-ignore:
+      - "*.md"
+      - "docs/**"
+
+jobs:
+  non-doc-change:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Non-documentation change detected
+        run: |
+          echo "A non-documentation file changed"
+          echo "Branch: ${{ github.ref_name }}"
