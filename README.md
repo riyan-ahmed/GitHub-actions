@@ -13,3 +13,4 @@ Day 41 PR trigger test
 Day 47 synchronize event test
 Day 47 docs ignore test
 Day 47 docs-only change
+Day 47 workflow_run test
