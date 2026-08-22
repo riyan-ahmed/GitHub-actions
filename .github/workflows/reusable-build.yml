@@ -19,9 +19,17 @@ name: Reusable Build
       docker_token:
         required: true
 
+    outputs:
+      build_version:
+        description: Generated build version
+        value: ${{ jobs.build.outputs.build_version }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    outputs:
+      build_version: ${{ steps.version.outputs.build_version }}
 
     steps:
       - name: Checkout code
@@ -31,6 +39,12 @@ jobs:
         run: |
           echo "Building ${{ inputs.app_name }}"
           echo "Environment: ${{ inputs.environment }}"
+
+      - name: Generate build version
+        id: version
+        run: |
+          short_sha="$(git rev-parse --short HEAD)"
+          echo "build_version=v1.0-${short_sha}" >> "$GITHUB_OUTPUT"
 
       - name: Check Docker token
         env:
