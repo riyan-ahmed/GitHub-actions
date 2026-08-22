@@ -1,0 +1,21 @@
+---
+name: Smart Triggers
+
+"on":
+  push:
+    branches:
+      - main
+      - "release/*"
+    paths:
+      - "src/**"
+      - "app/**"
+
+jobs:
+  changed-code:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Code change detected
+        run: |
+          echo "A file inside src/ or app/ changed"
+          echo "Branch: ${{ github.ref_name }}"
