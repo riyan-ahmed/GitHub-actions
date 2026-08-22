@@ -1,0 +1,65 @@
+---
+name: PR Checks
+
+"on":
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  file-size-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check changed file sizes
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          git diff --name-only "$BASE_SHA" "$HEAD_SHA" |
+          while IFS= read -r file; do
+            [ -f "$file" ] || continue
+            size=$(wc -c < "$file")
+
+            if [ "$size" -gt 1048576 ]; then
+              echo "Too large: $file ($size bytes)"
+              exit 1
+            fi
+          done
+
+          echo "All changed files are under 1 MB"
+
+  branch-name-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Validate branch name
+        env:
+          BRANCH_NAME: ${{ github.head_ref }}
+        run: |
+          if [[ "$BRANCH_NAME" =~ ^(feature|fix|docs)/.+$ ]]; then
+            echo "Valid branch name: $BRANCH_NAME"
+          else
+            echo "Invalid branch name: $BRANCH_NAME"
+            echo "Use feature/*, fix/*, or docs/*"
+            exit 1
+          fi
+
+  pr-body-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check PR description
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          if [ -z "$PR_BODY" ]; then
+            echo "::warning::PR description is empty"
+          else
+            echo "PR description is present"
+          fi
